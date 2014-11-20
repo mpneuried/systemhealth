@@ -13,13 +13,13 @@ Node module to run simple custom checks for your machine or it's connections. It
 
 ## Install
 
-```
+```sh
   npm install systemhealth
 ```
 
 ## Initialize
 
-```
+```js
   var Systemhealth = require( "systemhealth" );
   var health = new Systemhealth( { identifier: "my-server-name" }, [ "foo", "bar" ], require( "./mychecks" ) )
 ```
@@ -118,8 +118,8 @@ Emitted after a check
 
 ## Example
 
-```
-  CHECKS = {
+```js
+  var CHECKS = {
   	"memcached": function(){
   		var Memcached = require( 'memcached' );
   		var _client = new Memcached();
@@ -145,7 +145,7 @@ Emitted after a check
   	}
   }
   var Systemhealth = require( "systemhealth" );
-  var health = new Systemhealth( { identifier: "my-server-name" }, [ "memcached", "sql" ], CHECKS )
+  var health = new Systemhealth( { identifier: "my-server-name" }, [ "memcached", "sql" ], CHECKS );
 ```
 
 ## Release History
@@ -153,6 +153,20 @@ Emitted after a check
 |Version|Date|Description|
 |:--:|:--:|:--|
 |0.0.1|2014-11-20|Initial commit|
+
+## Other projects
+
+|Name|Description|
+|:--|:--|
+|[**redis-heartbeat**](https://github.com/mpneuried/redis-heartbeat)|Pulse a heartbeat to redis. This can be used to detach or attach servers to nginx or similar problems.|
+|[**node-cache**](https://github.com/tcs-de/nodecache)|Simple and fast NodeJS internal caching. Node internal in memory cache like memcached.|
+|[**rsmq**](https://github.com/smrchy/rsmq)|A really simple message queue based on Redis|
+|[**redis-sessions**](https://github.com/smrchy/redis-sessions)|An advanced session store for NodeJS and Redis|
+|[**connect-redis-sessions**](https://github.com/mpneuried/connect-redis-sessions)|A connect or express middleware to simply use the [redis sessions](https://github.com/smrchy/redis-sessions).
+With [redis sessions](https://github.com/smrchy/redis-sessions) you can handle multiple sessions per user_id.|
+|[**soyer**](https://github.com/mpneuried/soyer)|Soyer is small lib for serverside use of Google Closure Templates with node.js.|
+|[**grunt-soy-compile**](https://github.com/mpneuried/grunt-soy-compile)|Compile Goggle Closure Templates ( SOY ) templates inclding the handling of XLIFF language files.|
+|[**backlunr**](https://github.com/mpneuried/backlunr)|A solution to bring Backbone Collections together with the browser fulltext search engine Lunr.js|
 
 ## The MIT License (MIT)
 
