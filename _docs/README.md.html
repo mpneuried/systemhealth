@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>README.md</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="doc-style.css" />
+  <script src="doc-filelist.js"></script>
+  <script>
+    var relativeDir = "", thisFile = "README.md", defaultSidebar = true;
+  </script>
+  <script src="doc-script.js"></script>
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+      <div class="heading h1">
+        <a href="#systemhealth">Systemhealth</a>
+      </div>
+      <div class="heading h2">
+        <a href="#install">Install</a>
+      </div>
+      <div class="heading h2">
+        <a href="#initialize">Initialize</a>
+      </div>
+      <div class="heading h2">
+        <a href="#methods">Methods</a>
+      </div>
+      <div class="heading h4">
+        <a href="#.start()">.start()</a>
+      </div>
+      <div class="heading h4">
+        <a href="#.stop()">.stop()</a>
+      </div>
+      <div class="heading h4">
+        <a href="#.die()">.die()</a>
+      </div>
+      <div class="heading h4">
+        <a href="#.resurrect()">.resurrect()</a>
+      </div>
+      <div class="heading h4">
+        <a href="#.getstate()">.getState()</a>
+      </div>
+      <div class="heading h2">
+        <a href="#events">Events</a>
+      </div>
+      <div class="heading h4">
+        <a href="#started">started</a>
+      </div>
+      <div class="heading h4">
+        <a href="#stopped">stopped</a>
+      </div>
+      <div class="heading h4">
+        <a href="#died">died</a>
+      </div>
+      <div class="heading h4">
+        <a href="#resurrected">resurrected</a>
+      </div>
+      <div class="heading h4">
+        <a href="#checked">checked</a>
+      </div>
+      <div class="heading h2">
+        <a href="#example">Example</a>
+      </div>
+      <div class="heading h2">
+        <a href="#release%20history">Release History</a>
+      </div>
+      <div class="heading h2">
+        <a href="#the%20mit%20license%20(mit)">The MIT License (MIT)</a>
+      </div>
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container"><div class="docs markdown">
+<div class="pilwrap" id="systemhealth">
+  <h1>
+    <a href="#systemhealth" name="systemhealth" class="pilcrow">&#182;</a>
+    Systemhealth
+  </h1>
+</div>
+
+
+<p><a href="http://travis-ci.org/mpneuried/systemhealth"><img src="https://secure.travis-ci.org/mpneuried/systemhealth.png?branch=master" alt="Build Status" title="" /></a>
+<a href="https://david-dm.org/mpneuried/systemhealth"><img src="https://david-dm.org/mpneuried/systemhealth.png" alt="Build Status" title="" /></a>
+<a href="http://badge.fury.io/js/systemhealth"><img src="https://badge.fury.io/js/systemhealth.png" alt="NPM version" title="" /></a></p>
+
+<p>Node module to run simple custom checks for your machine or it's connections. It will use <a href="https://github.com/mpneuried/redis-heartbeat">redis-heartbeat</a> to send the current state to redis.</p>
+
+<p><em>Written in coffee-script</em></p>
+
+<p><strong>INFO: all examples are written in coffee-script</strong></p>
+
+
+<div class="pilwrap" id="install">
+  <h2>
+    <a href="#install" name="install" class="pilcrow">&#182;</a>
+    Install
+  </h2>
+</div>
+
+
+<div class='highlight'><pre><code language=''>  npm install systemhealth
+</code></pre></div>
+
+
+<div class="pilwrap" id="initialize">
+  <h2>
+    <a href="#initialize" name="initialize" class="pilcrow">&#182;</a>
+    Initialize
+  </h2>
+</div>
+
+
+<div class='highlight'><pre><code language=''>  var Systemhealth = require( "systemhealth" );
+  var health = new Systemhealth( { identifier: "my-server-name" }, [ "foo", "bar" ], require( "./mychecks" ) )
+</code></pre></div>
+
+<p><strong>Options</strong> </p>
+
+<ul>
+<li><strong>identifier</strong> : <em>( <code>String|Function</code> required )</em> The heartbeat identifier content as string or function. Passed directly to <code>redis-heartbeat</code></li>
+<li><p><strong>name</strong> : <em>( <code>String</code> optional: default = <code>os.hostname()</code> )</em> A server type name. Default is the host name. Passed directly to `redis-heartbeat</p></li>
+<li><p><strong>interval</strong> : <em>( <code>Number</code> optional: default = <code>60</code> )</em> Check interval in seconds</p></li>
+<li><strong>intervalVariance</strong> : <em>( <code>Number</code> optional: default = <code>0</code> )</em> If you are using the same configuration for multiple servers you can define a variance that will add random seconds to the interval until this value.</li>
+<li><strong>failCount</strong> : <em>( <code>Number</code> optional: default = <code>2</code> )</em> Count of failed checks per check until "die". E.g. Mark server as dead until 2 failed checks of the sql connection.</li>
+<li><strong>successCount</strong> : <em>( <code>Number</code> optional: default = <code>1</code> )</em> Count of successful checks until the server resurrect. </li>
+<li><p><strong>failTimeout</strong> : <em>( <code>Number</code> optional: default = <code>2000</code> )</em> Internal check timeout to wait for answers of check tasks</p></li>
+<li><p><strong>host</strong> : <em>( <code>String</code> optional: default = <code>localhost</code> )</em> Redis host name. Passed directly to <code>redis-heartbeat</code></p></li>
+<li><strong>port</strong> : <em>( <code>Number</code> optional: default = <code>6379</code> )</em> Redis port. Passed directly to <code>redis-heartbeat</code></li>
+<li><strong>options</strong> : <em>( <code>Object</code> optional: default = <code>{}</code> )</em> Redis options. Passed directly to <code>redis-heartbeat</code></li>
+<li><strong>client</strong> : <em>( <code>RedicClient</code> optional: default = <code>null</code> )</em> It also possible to pass in a already existing redis client instance. In this .case the options <code>host</code>, <code>port</code> and <code>options</code> ar ignored. Passed directly to <code>redis-heartbeat</code></li>
+<li><strong>redisprefix</strong> : <em>( <code>String</code> optional: default = <code>{}</code> )</em> A general redis key prefix. Passed directly to <code>redis-heartbeat</code></li>
+<li><strong>heartbeatOptions</strong> : <em>( <code>Object</code> optional: default = <code>{}</code> )</em> Optional <code>redis-heartbeat</code> options. <a href="https://github.com/mpneuried/redis-heartbeat#initialize">Details</a></li>
+</ul>
+
+
+<div class="pilwrap" id="methods">
+  <h2>
+    <a href="#methods" name="methods" class="pilcrow">&#182;</a>
+    Methods
+  </h2>
+</div>
+
+
+
+<div class="pilwrap" id=".start()">
+  <h4>
+    <a href="#.start()" name=".start()" class="pilcrow">&#182;</a>
+    <code>.start()</code>
+  </h4>
+</div>
+
+
+<p>Start checking the health of the server and connections</p>
+
+<p><strong>Return</strong></p>
+
+<p><em>( Systemhealth )</em>: The instance itself for chaining </p>
+
+
+<div class="pilwrap" id=".stop()">
+  <h4>
+    <a href="#.stop()" name=".stop()" class="pilcrow">&#182;</a>
+    <code>.stop()</code>
+  </h4>
+</div>
+
+
+<p>Stop checking interval</p>
+
+<p><strong>Return</strong></p>
+
+<p><em>( Systemhealth )</em>: The instance itself for chaining </p>
+
+
+<div class="pilwrap" id=".die()">
+  <h4>
+    <a href="#.die()" name=".die()" class="pilcrow">&#182;</a>
+    <code>.die()</code>
+  </h4>
+</div>
+
+
+<p>Mark the server as dead and stop the heartbeat.
+    This is called until one check failed for <code>option.failCount</code> times.</p>
+
+<p><strong>Return</strong></p>
+
+<p><em>( Boolean )</em>: Successful died. If the health is already <code>dead</code> it'll return <code>false</code></p>
+
+
+<div class="pilwrap" id=".resurrect()">
+  <h4>
+    <a href="#.resurrect()" name=".resurrect()" class="pilcrow">&#182;</a>
+    <code>.resurrect()</code>
+  </h4>
+</div>
+
+
+<p>Resurrect the server and restart the heartbeat.
+This is called until all checks are successful for <code>option.successCount</code> times.</p>
+
+<p><strong>Return</strong></p>
+
+<p><em>( Boolean )</em>: Successful died. If the health is already <code>dead</code> it'll return <code>false</code></p>
+
+
+<div class="pilwrap" id=".getstate()">
+  <h4>
+    <a href="#.getstate()" name=".getstate()" class="pilcrow">&#182;</a>
+    <code>.getState()</code>
+  </h4>
+</div>
+
+
+<p>return the last check state.</p>
+
+<p><strong>Return</strong></p>
+
+<p><em>( Object )</em>: An object with the state of all checks. </p>
+
+<p>Format: <code>{ "my-check-foo-name": [ {state}, {data} ] }</code>
+<em>{state}</em>: Positive numbers represent the successful counts. Negative numbers represent the fail count. <br />
+<em>{data}</em>: Optional data or error infos</p>
+
+
+<div class="pilwrap" id="events">
+  <h2>
+    <a href="#events" name="events" class="pilcrow">&#182;</a>
+    Events
+  </h2>
+</div>
+
+
+
+<div class="pilwrap" id="started">
+  <h4>
+    <a href="#started" name="started" class="pilcrow">&#182;</a>
+    <code>started</code>
+  </h4>
+</div>
+
+
+<p>Emitted on a successfull start of the heartbeat after the frist check.</p>
+
+
+<div class="pilwrap" id="stopped">
+  <h4>
+    <a href="#stopped" name="stopped" class="pilcrow">&#182;</a>
+    <code>stopped</code>
+  </h4>
+</div>
+
+
+<p>Emitted on a check stop.</p>
+
+
+<div class="pilwrap" id="died">
+  <h4>
+    <a href="#died" name="died" class="pilcrow">&#182;</a>
+    <code>died</code>
+  </h4>
+</div>
+
+
+<p>Emitted on heartbeat stop. So the server/machine is defined as dead.</p>
+
+
+<div class="pilwrap" id="resurrected">
+  <h4>
+    <a href="#resurrected" name="resurrected" class="pilcrow">&#182;</a>
+    <code>resurrected</code>
+  </h4>
+</div>
+
+
+<p>Emitted on restart of heartbeat. So the server/machine is defined as alive.</p>
+
+
+<div class="pilwrap" id="checked">
+  <h4>
+    <a href="#checked" name="checked" class="pilcrow">&#182;</a>
+    <code>checked</code>
+  </h4>
+</div>
+
+
+<p>Emitted after a check</p>
+
+<p><strong>Arguments</strong> </p>
+
+<ul>
+<li><strong>state</strong> : <em>( <code>Object</code> )</em> See method <code>.getState()</code> for teh description of the return</li>
+</ul>
+
+
+<div class="pilwrap" id="example">
+  <h2>
+    <a href="#example" name="example" class="pilcrow">&#182;</a>
+    Example
+  </h2>
+</div>
+
+
+<div class='highlight'><pre><code language=''>  CHECKS = {
+      "memcached": function(){
+          var Memcached = require( 'memcached' );
+          var _client = new Memcached();
+          return function( cb ){
+              _client.version( function( err, version ){
+                  if( err ){
+                      cb( null, false, err ); // do not return a regular error. Just return false as second arg and optinal info like the error object
+                  }
+                  cb( null, true, { _v: version } ); // just return true and optional information, that will be logged to redis metics
+              });
+          }
+      },
+      "sql": function(){
+          var _client = require( './my-sql-client42' );
+          return function( cb ){
+              _client.query( "SELECT 5", function( err, return ){
+                  if( err ){
+                      cb( null, false, err ); // do not return a regular error. Just return false as second arg and optinal info like the error object
+                  }
+                  cb( null, true );
+              });
+          }
+      }
+  }
+  var Systemhealth = require( "systemhealth" );
+  var health = new Systemhealth( { identifier: "my-server-name" }, [ "memcached", "sql" ], CHECKS )
+</code></pre></div>
+
+
+<div class="pilwrap" id="release%20history">
+  <h2>
+    <a href="#release%20history" name="release%20history" class="pilcrow">&#182;</a>
+    Release History
+  </h2>
+</div>
+
+
+<p>|Version|Date|Description|
+|:--:|:--:|:--|
+|0.0.1|2014-11-20|Initial commit|</p>
+
+
+<div class="pilwrap" id="the%20mit%20license%20(mit)">
+  <h2>
+    <a href="#the%20mit%20license%20(mit)" name="the%20mit%20license%20(mit)" class="pilcrow">&#182;</a>
+    The MIT License (MIT)
+  </h2>
+</div>
+
+
+<p>Copyright © 2013 Mathias Peter, <a href='http://www.tcs.de'>http://www.tcs.de</a></p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p></div>
+  </div>
+</body>
+</html>
