@@ -91,7 +91,7 @@ class SystemHealth extends require( "mpbasic" )()
 
 		# listen to redis-heartbeat events
 		@hb.on "disconnect", =>
-			@bd.once "connected", @resurrect
+			@hb.once "connected", @resurrect
 			return
 
 		@hb.on "beforeMetric", @_onMetric

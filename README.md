@@ -152,6 +152,7 @@ Emitted after a check
 
 |Version|Date|Description|
 |:--:|:--:|:--|
+|0.0.2|2015-03-11|Small bugfix within redis connection listening|
 |0.0.1|2014-11-20|Initial commit|
 
 ## Other projects

@@ -70,6 +70,9 @@
         <a href="#release%20history">Release History</a>
       </div>
       <div class="heading h2">
+        <a href="#other%20projects">Other projects</a>
+      </div>
+      <div class="heading h2">
         <a href="#the%20mit%20license%20(mit)">The MIT License (MIT)</a>
       </div>
     </div>
@@ -103,8 +106,11 @@
 </div>
 
 
-<div class='highlight'><pre><code language=''>  npm install systemhealth
+
+<div class="highlight"><pre><code>  npm install systemhealth
 </code></pre></div>
+
+
 
 
 <div class="pilwrap" id="initialize">
@@ -115,9 +121,12 @@
 </div>
 
 
-<div class='highlight'><pre><code language=''>  var Systemhealth = require( "systemhealth" );
-  var health = new Systemhealth( { identifier: "my-server-name" }, [ "foo", "bar" ], require( "./mychecks" ) )
+
+<div class="highlight"><pre><code>  <span class="kd">var</span> <span class="nx">Systemhealth</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">&quot;systemhealth&quot;</span> <span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">health</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Systemhealth</span><span class="p">(</span> <span class="p">{</span> <span class="nx">identifier</span><span class="o">:</span> <span class="s2">&quot;my-server-name&quot;</span> <span class="p">},</span> <span class="p">[</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="p">],</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">&quot;./mychecks&quot;</span> <span class="p">)</span> <span class="p">)</span>
 </code></pre></div>
+
+
 
 <p><strong>Options</strong> </p>
 
@@ -306,34 +315,37 @@ This is called until all checks are successful for <code>option.successCount</co
 </div>
 
 
-<div class='highlight'><pre><code language=''>  CHECKS = {
-      "memcached": function(){
-          var Memcached = require( 'memcached' );
-          var _client = new Memcached();
-          return function( cb ){
-              _client.version( function( err, version ){
-                  if( err ){
-                      cb( null, false, err ); // do not return a regular error. Just return false as second arg and optinal info like the error object
-                  }
-                  cb( null, true, { _v: version } ); // just return true and optional information, that will be logged to redis metics
-              });
-          }
-      },
-      "sql": function(){
-          var _client = require( './my-sql-client42' );
-          return function( cb ){
-              _client.query( "SELECT 5", function( err, return ){
-                  if( err ){
-                      cb( null, false, err ); // do not return a regular error. Just return false as second arg and optinal info like the error object
-                  }
-                  cb( null, true );
-              });
-          }
-      }
-  }
-  var Systemhealth = require( "systemhealth" );
-  var health = new Systemhealth( { identifier: "my-server-name" }, [ "memcached", "sql" ], CHECKS )
+
+<div class="highlight"><pre><code>  <span class="kd">var</span> <span class="nx">CHECKS</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s2">&quot;memcached&quot;</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+          <span class="kd">var</span> <span class="nx">Memcached</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s1">&#39;memcached&#39;</span> <span class="p">);</span>
+          <span class="kd">var</span> <span class="nx">_client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Memcached</span><span class="p">();</span>
+          <span class="k">return</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">cb</span> <span class="p">){</span>
+              <span class="nx">_client</span><span class="p">.</span><span class="nx">version</span><span class="p">(</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">err</span><span class="p">,</span> <span class="nx">version</span> <span class="p">){</span>
+                  <span class="k">if</span><span class="p">(</span> <span class="nx">err</span> <span class="p">){</span>
+                      <span class="nx">cb</span><span class="p">(</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">err</span> <span class="p">);</span> <span class="c1">// do not return a regular error. Just return false as second arg and optinal info like the error object</span>
+                  <span class="p">}</span>
+                  <span class="nx">cb</span><span class="p">(</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="p">{</span> <span class="nx">_v</span><span class="o">:</span> <span class="nx">version</span> <span class="p">}</span> <span class="p">);</span> <span class="c1">// just return true and optional information, that will be logged to redis metics</span>
+              <span class="p">});</span>
+          <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;sql&quot;</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+          <span class="kd">var</span> <span class="nx">_client</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s1">&#39;./my-sql-client42&#39;</span> <span class="p">);</span>
+          <span class="k">return</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">cb</span> <span class="p">){</span>
+              <span class="nx">_client</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span> <span class="s2">&quot;SELECT 5&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">err</span><span class="p">,</span> <span class="k">return</span> <span class="p">){</span>
+                  <span class="k">if</span><span class="p">(</span> <span class="nx">err</span> <span class="p">){</span>
+                      <span class="nx">cb</span><span class="p">(</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">err</span> <span class="p">);</span> <span class="c1">// do not return a regular error. Just return false as second arg and optinal info like the error object</span>
+                  <span class="p">}</span>
+                  <span class="nx">cb</span><span class="p">(</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">true</span> <span class="p">);</span>
+              <span class="p">});</span>
+          <span class="p">}</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="kd">var</span> <span class="nx">Systemhealth</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s2">&quot;systemhealth&quot;</span> <span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">health</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Systemhealth</span><span class="p">(</span> <span class="p">{</span> <span class="nx">identifier</span><span class="o">:</span> <span class="s2">&quot;my-server-name&quot;</span> <span class="p">},</span> <span class="p">[</span> <span class="s2">&quot;memcached&quot;</span><span class="p">,</span> <span class="s2">&quot;sql&quot;</span> <span class="p">],</span> <span class="nx">CHECKS</span> <span class="p">);</span>
 </code></pre></div>
+
+
 
 
 <div class="pilwrap" id="release%20history">
@@ -346,7 +358,29 @@ This is called until all checks are successful for <code>option.successCount</co
 
 <p>|Version|Date|Description|
 |:--:|:--:|:--|
+|0.0.2|2015-03-11|Small bugfix within redis connection listening|
 |0.0.1|2014-11-20|Initial commit|</p>
+
+
+<div class="pilwrap" id="other%20projects">
+  <h2>
+    <a href="#other%20projects" name="other%20projects" class="pilcrow">&#182;</a>
+    Other projects
+  </h2>
+</div>
+
+
+<p>|Name|Description|
+|:--|:--|
+|<a href="https://github.com/mpneuried/redis-heartbeat"><strong>redis-heartbeat</strong></a>|Pulse a heartbeat to redis. This can be used to detach or attach servers to nginx or similar problems.|
+|<a href="https://github.com/tcs-de/nodecache"><strong>node-cache</strong></a>|Simple and fast NodeJS internal caching. Node internal in memory cache like memcached.|
+|<a href="https://github.com/smrchy/rsmq"><strong>rsmq</strong></a>|A really simple message queue based on Redis|
+|<a href="https://github.com/smrchy/redis-sessions"><strong>redis-sessions</strong></a>|An advanced session store for NodeJS and Redis|
+|<a href="https://github.com/mpneuried/connect-redis-sessions"><strong>connect-redis-sessions</strong></a>|A connect or express middleware to simply use the <a href="https://github.com/smrchy/redis-sessions">redis sessions</a>. With <a href="https://github.com/smrchy/redis-sessions">redis sessions</a> you can handle multiple sessions per user_id.|
+|<a href="https://github.com/smrchy/task-queue-worker"><strong>task-queue-worker</strong></a>|A powerful tool for background processing of tasks that are run by making standard http requests.|
+|<a href="https://github.com/mpneuried/soyer"><strong>soyer</strong></a>|Soyer is small lib for serverside use of Google Closure Templates with node.js.|
+|<a href="https://github.com/mpneuried/grunt-soy-compile"><strong>grunt-soy-compile</strong></a>|Compile Goggle Closure Templates ( SOY ) templates inclding the handling of XLIFF language files.|
+|<a href="https://github.com/mpneuried/backlunr"><strong>backlunr</strong></a>|A solution to bring Backbone Collections together with the browser fulltext search engine Lunr.js|</p>
 
 
 <div class="pilwrap" id="the%20mit%20license%20(mit)">

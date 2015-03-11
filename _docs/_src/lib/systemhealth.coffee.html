@@ -461,7 +461,7 @@ The <a href="./utils.coffee.html">Utils</a></p>
         </td>
         <td class="code highlight"><div class="highlight"><pre><a class="line-num" href="#line-93" id="line-93">93</a>  
 <a class="line-num" href="#line-94" id="line-94">94</a>      <span class="nx">@hb</span><span class="p">.</span><span class="nx">on</span> <span class="s">&quot;disconnect&quot;</span><span class="p">,</span> <span class="o">=&gt;</span>
-<a class="line-num" href="#line-95" id="line-95">95</a>        <span class="nx">@bd</span><span class="p">.</span><span class="nx">once</span> <span class="s">&quot;connected&quot;</span><span class="p">,</span> <span class="nx">@resurrect</span>
+<a class="line-num" href="#line-95" id="line-95">95</a>        <span class="nx">@hb</span><span class="p">.</span><span class="nx">once</span> <span class="s">&quot;connected&quot;</span><span class="p">,</span> <span class="nx">@resurrect</span>
 <a class="line-num" href="#line-96" id="line-96">96</a>        <span class="k">return</span>
 <a class="line-num" href="#line-97" id="line-97">97</a>  
 <a class="line-num" href="#line-98" id="line-98">98</a>      <span class="nx">@hb</span><span class="p">.</span><span class="nx">on</span> <span class="s">&quot;beforeMetric&quot;</span><span class="p">,</span> <span class="nx">@_onMetric</span>
