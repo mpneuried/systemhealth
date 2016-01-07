@@ -67,6 +67,15 @@
         <a href="#example">Example</a>
       </div>
       <div class="heading h2">
+        <a href="#properties">Properties</a>
+      </div>
+      <div class="heading h4">
+        <a href="#alive">alive</a>
+      </div>
+      <div class="heading h4">
+        <a href="#hb">hb</a>
+      </div>
+      <div class="heading h2">
         <a href="#release%20history">Release History</a>
       </div>
       <div class="heading h2">
@@ -92,10 +101,6 @@
 <a href="http://badge.fury.io/js/systemhealth"><img src="https://badge.fury.io/js/systemhealth.png" alt="NPM version" title="" /></a></p>
 
 <p>Node module to run simple custom checks for your machine or it's connections. It will use <a href="https://github.com/mpneuried/redis-heartbeat">redis-heartbeat</a> to send the current state to redis.</p>
-
-<p><em>Written in coffee-script</em></p>
-
-<p><strong>INFO: all examples are written in coffee-script</strong></p>
 
 
 <div class="pilwrap" id="install">
@@ -348,6 +353,45 @@ This is called until all checks are successful for <code>option.successCount</co
 
 
 
+<div class="pilwrap" id="properties">
+  <h2>
+    <a href="#properties" name="properties" class="pilcrow">&#182;</a>
+    Properties
+  </h2>
+</div>
+
+
+
+<div class="pilwrap" id="alive">
+  <h4>
+    <a href="#alive" name="alive" class="pilcrow">&#182;</a>
+    <code>alive</code>
+  </h4>
+</div>
+
+
+<p>If the service is alive this property will be <code>true</code></p>
+
+<p><strong>Return</strong></p>
+
+<p><em>( Boolean )</em>: If it's alive</p>
+
+
+<div class="pilwrap" id="hb">
+  <h4>
+    <a href="#hb" name="hb" class="pilcrow">&#182;</a>
+    <code>hb</code>
+  </h4>
+</div>
+
+
+<p>The internally used instance of <a href="https://github.com/mpneuried/redis-heartbeat"><code>redis-heartbeat</code></a>.</p>
+
+<p><strong>Return</strong></p>
+
+<p><em>( Heartbeat )</em>: The redis heartbeat instance</p>
+
+
 <div class="pilwrap" id="release%20history">
   <h2>
     <a href="#release%20history" name="release%20history" class="pilcrow">&#182;</a>
@@ -358,6 +402,7 @@ This is called until all checks are successful for <code>option.successCount</co
 
 <p>|Version|Date|Description|
 |:--:|:--:|:--|
+|0.0.3|2016-01-07|Updated dependencies|
 |0.0.2|2015-03-11|Small bugfix within redis connection listening|
 |0.0.1|2014-11-20|Initial commit|</p>
 
@@ -375,6 +420,10 @@ This is called until all checks are successful for <code>option.successCount</co
 |<a href="https://github.com/mpneuried/redis-heartbeat"><strong>redis-heartbeat</strong></a>|Pulse a heartbeat to redis. This can be used to detach or attach servers to nginx or similar problems.|
 |<a href="https://github.com/tcs-de/nodecache"><strong>node-cache</strong></a>|Simple and fast NodeJS internal caching. Node internal in memory cache like memcached.|
 |<a href="https://github.com/smrchy/rsmq"><strong>rsmq</strong></a>|A really simple message queue based on Redis|
+|<a href="https://github.com/mpneuried/nsq-logger"><strong>nsq-logger</strong></a>|Nsq service to read messages from all topics listed within a list of nsqlookupd services.|
+|<a href="https://github.com/mpneuried/nsq-topics"><strong>nsq-topics</strong></a>|Nsq helper to poll a nsqlookupd service for all it's topics and mirror it locally.|
+|<a href="https://github.com/mpneuried/nsq-nodes"><strong>nsq-nodes</strong></a>|Nsq helper to poll a nsqlookupd service for all it's nodes and mirror it locally.|
+|<a href="https://github.com/mpneuried/nsq-watch"><strong>nsq-watch</strong></a>|Watch one or many topics for unprocessed messages.|
 |<a href="https://github.com/smrchy/redis-sessions"><strong>redis-sessions</strong></a>|An advanced session store for NodeJS and Redis|
 |<a href="https://github.com/mpneuried/connect-redis-sessions"><strong>connect-redis-sessions</strong></a>|A connect or express middleware to simply use the <a href="https://github.com/smrchy/redis-sessions">redis sessions</a>. With <a href="https://github.com/smrchy/redis-sessions">redis sessions</a> you can handle multiple sessions per user_id.|
 |<a href="https://github.com/smrchy/task-queue-worker"><strong>task-queue-worker</strong></a>|A powerful tool for background processing of tasks that are run by making standard http requests.|

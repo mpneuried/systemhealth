@@ -7,10 +7,6 @@ Systemhealth
 
 Node module to run simple custom checks for your machine or it's connections. It will use [redis-heartbeat](https://github.com/mpneuried/redis-heartbeat) to send the current state to redis.
 
-*Written in coffee-script*
-
-**INFO: all examples are written in coffee-script**
-
 ## Install
 
 ```sh
@@ -148,10 +144,29 @@ Emitted after a check
   var health = new Systemhealth( { identifier: "my-server-name" }, [ "memcached", "sql" ], CHECKS );
 ```
 
+## Properties
+
+#### `alive`
+
+If the service is alive this property will be `true`
+
+**Return**
+
+*( Boolean )*: If it's alive
+
+#### `hb`
+
+The internally used instance of [`redis-heartbeat`](https://github.com/mpneuried/redis-heartbeat).
+
+**Return**
+
+*( Heartbeat )*: The redis heartbeat instance
+
 ## Release History
 
 |Version|Date|Description|
 |:--:|:--:|:--|
+|0.0.3|2016-01-07|Updated dependencies; Optimized Readme|
 |0.0.2|2015-03-11|Small bugfix within redis connection listening|
 |0.0.1|2014-11-20|Initial commit|
 
@@ -162,6 +177,10 @@ Emitted after a check
 |[**redis-heartbeat**](https://github.com/mpneuried/redis-heartbeat)|Pulse a heartbeat to redis. This can be used to detach or attach servers to nginx or similar problems.|
 |[**node-cache**](https://github.com/tcs-de/nodecache)|Simple and fast NodeJS internal caching. Node internal in memory cache like memcached.|
 |[**rsmq**](https://github.com/smrchy/rsmq)|A really simple message queue based on Redis|
+|[**nsq-logger**](https://github.com/mpneuried/nsq-logger)|Nsq service to read messages from all topics listed within a list of nsqlookupd services.|
+|[**nsq-topics**](https://github.com/mpneuried/nsq-topics)|Nsq helper to poll a nsqlookupd service for all it's topics and mirror it locally.|
+|[**nsq-nodes**](https://github.com/mpneuried/nsq-nodes)|Nsq helper to poll a nsqlookupd service for all it's nodes and mirror it locally.|
+|[**nsq-watch**](https://github.com/mpneuried/nsq-watch)|Watch one or many topics for unprocessed messages.|
 |[**redis-sessions**](https://github.com/smrchy/redis-sessions)|An advanced session store for NodeJS and Redis|
 |[**connect-redis-sessions**](https://github.com/mpneuried/connect-redis-sessions)|A connect or express middleware to simply use the [redis sessions](https://github.com/smrchy/redis-sessions). With [redis sessions](https://github.com/smrchy/redis-sessions) you can handle multiple sessions per user_id.|
 |[**task-queue-worker**](https://github.com/smrchy/task-queue-worker)|A powerful tool for background processing of tasks that are run by making standard http requests.|
