@@ -2,10 +2,13 @@ Systemhealth
 ============
 
 [![Build Status](https://secure.travis-ci.org/mpneuried/systemhealth.png?branch=master)](http://travis-ci.org/mpneuried/systemhealth)
-[![Build Status](https://david-dm.org/mpneuried/systemhealth.png)](https://david-dm.org/mpneuried/systemhealth)
+[![Windows Tests](https://img.shields.io/appveyor/ci/mpneuried/systemhealth.svg?label=Windows%20Test)]()
+[![Dependency Status](https://david-dm.org/mpneuried/systemhealth.png)](https://david-dm.org/mpneuried/systemhealth)
 [![NPM version](https://badge.fury.io/js/systemhealth.png)](http://badge.fury.io/js/systemhealth)
 
 Node module to run simple custom checks for your machine or it's connections. It will use [redis-heartbeat](https://github.com/mpneuried/redis-heartbeat) to send the current state to redis.
+
+[![NPM](https://nodei.co/npm/systemhealth.png?downloads=true&stars=true)](https://nodei.co/npm/systemhealth)
 
 ## Install
 
@@ -212,6 +215,8 @@ To run the tests through the defined versions run the following command:
 |0.0.3|2016-01-07|Updated dependencies; Optimized Readme|
 |0.0.2|2015-03-11|Small bugfix within redis connection listening|
 |0.0.1|2014-11-20|Initial commit|
+
+[![NPM](https://nodei.co/npm-dl/systemhealth.png?months=6)](https://nodei.co/npm/systemhealth/)
 
 ## Other projects
 
