@@ -1,8 +1,8 @@
 should = require('should')
 
-Systemhealth = require( "../." ) 
+Systemhealth = require( "../." )
 
-CHECKS = require( "./checks" ) 
+CHECKS = require( "./checks" )
 
 Health = null
 
@@ -23,9 +23,9 @@ describe "----- Systemhealth TESTS -----", ->
 		it "general", ( done )->
 			this.timeout( 10000 )
 
-			Health.on "checked", =>
+			Health.on "checked", ->
 				Health.getState().should.have.properties( "checkFoo", "check42" )
-				done()	
+				done()
 				return
 
 			Health.start()

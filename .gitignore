@@ -4,16 +4,18 @@
 *.DS_Store
 *.zip
 *.rdb
+*.log
 
 .project
 .settings
 .idea
 
-/lib
-/test
-*.mo
 *.sublime*
 config.json
 config*.json
 deploy.json
 /node_modules
+*.js
+/lib
+/_docs
+/test

@@ -5,18 +5,14 @@ module.exports = (grunt) ->
 		regarde:
 			module:
 				files: ["_src/**/*.coffee"]
-				tasks: [ "coffee:changed" ]
+				tasks: [ "coffee:base" ]
+
+			module_test:
+				files: ["_src/**/*.coffee"]
+				tasks: [ "coffee:base", "test" ]
+			
 			
 		coffee:
-			changed:
-				expand: true
-				cwd: '_src'
-				src:	[ 'nothing' ]
-				# template to cut off `_src/` and throw on error on non-regrade call
-				# CF: `_.first( grunt?.regarde?.changed or [ "_src/nothing" ] ).slice( "_src/".length )
-				dest: ''
-				ext: '.js'
-
 			base:
 				expand: true
 				cwd: '_src',
@@ -32,7 +28,7 @@ module.exports = (grunt) ->
 			pckg:
 				options:
 					globals:
-						version: "0.0.1"
+						version: "<%= pkg.version %>"
 
 					prefix: "@@"
 					suffix: ''
@@ -52,45 +48,29 @@ module.exports = (grunt) ->
 			main:
 				src: [ "test/main.js" ]
 				options:
-					env: 
+					env:
 						severity_systemhealth: "debug"
 		
 		
-		docker:
-			serverdocs:
-				expand: true
-				src: ["_src/**/*.coffee", "README.md"]
-				dest: "_docs/"
-				options:
-					onlyUpdated: false
-					colourScheme: "autumn"
-					ignoreHidden: false
-					sidebarState: true
-					exclude: false
-					lineNums: true
-					js: []
-					css: []
-					extras: []
-		
 
 	# Load npm modules
-	grunt.loadNpmTasks "grunt-regarde"
+	grunt.loadNpmTasks "grunt-contrib-watch"
 	grunt.loadNpmTasks "grunt-contrib-coffee"
 	grunt.loadNpmTasks "grunt-contrib-clean"
 	grunt.loadNpmTasks "grunt-mocha-cli"
 	grunt.loadNpmTasks "grunt-include-replace"
-	grunt.loadNpmTasks "grunt-docker"
 
-	# just a hack until this issue has been fixed: https://github.com/yeoman/grunt-regarde/issues/3
-	grunt.option('force', not grunt.option('force'))
-	
 	# ALIAS TASKS
-	grunt.registerTask "watch", "regarde"
 	grunt.registerTask "default", "build"
-	grunt.registerTask "docs", "docker"
 	grunt.registerTask "clear", [ "clean:base" ]
 	grunt.registerTask "test", [ "mochacli:main" ]
+	grunt.registerTask "watcher-test", [ "watch:module_test" ]
+
+	# ALIAS SHORTS
+	grunt.registerTask "b", "build"
+	grunt.registerTask "w", "watcher"
+	grunt.registerTask "wt", "watcher-test"
+	grunt.registerTask "t", "test"
 
 	# build the project
 	grunt.registerTask "build", [ "clear", "coffee:base", "includereplace" ]
-	grunt.registerTask "build-dev", [ "clear", "coffee:base", "docs", "test" ]
