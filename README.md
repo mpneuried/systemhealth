@@ -115,6 +115,15 @@ Emitted after a check
 
 - **state** : *( `Object` )* See method `.getState()` for teh description of the return
 
+#### `failed`
+
+A immediate event when a check fails.
+
+**Arguments** 
+
+- **check** : *( `String` )* The key of the failed check function
+- **data** : *( `Any` )* Optional data or error infos
+
 ## Example
 
 ```js
@@ -211,6 +220,7 @@ To run the tests through the defined versions run the following command:
 
 |Version|Date|Description|
 |:--:|:--:|:--|
+|0.0.5|2016-06-24|Added `failed` event to get immediate infos on an failed check;|
 |0.0.4|2016-05-19|Updated dependencies; Updated dev env.; Removed generated code docs;|
 |0.0.3|2016-01-07|Updated dependencies; Optimized Readme|
 |0.0.2|2015-03-11|Small bugfix within redis connection listening|

@@ -334,6 +334,7 @@ class SystemHealth extends require( "mpbasic" )()
 						@succeeded[ _name ]++
 					else
 						_fail = true
+						@emit "failed", _name, data
 						@warning "failed-#{_name}", data 
 						@failed[ _name ]++
 						@succeeded[ _name ] = 0
