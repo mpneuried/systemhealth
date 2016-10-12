@@ -19,3 +19,4 @@ deploy.json
 /lib
 /_docs
 /test
+/coverage

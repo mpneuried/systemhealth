@@ -19,4 +19,5 @@ deploy.json
 /_src
 /_docs
 /dockertests
+/coverage
 Gruntfile.*
