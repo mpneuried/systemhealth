@@ -3,6 +3,13 @@ os:
   - osx
 services:
   - redis-server
+sudo: false
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
 language: node_js
 node_js:
   - 0.10
@@ -19,6 +26,8 @@ node_js:
   - lts/argon
   - lts/*
   - iojs
+before_install:
+  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then export CXX=g++-4.8; fi
 after_success:
   - ./node_modules/.bin/istanbul report text-summary lcov
   - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
