@@ -1,8 +1,8 @@
 # create a simulated client
-_createClient = ( timeout=300, success=true )=>
-	_ret = 
-		ping: ( cb )=>
-			setTimeout( =>
+_createClient = ( timeout=300, success=true )->
+	_ret =
+		ping: ( cb )->
+			setTimeout( ->
 				if success
 					cb( null, "pong" )
 				else
@@ -12,8 +12,8 @@ _createClient = ( timeout=300, success=true )=>
 				return
 			, timeout )
 			return
-		query: ( statement, cb )=>
-			setTimeout( =>
+		query: ( statement, cb )->
+			setTimeout( ->
 				if success
 					cb( null, [ { id: 42, name: "Bar", statement: statement } ] )
 				else
@@ -25,13 +25,13 @@ _createClient = ( timeout=300, success=true )=>
 			return
 	return _ret
 	
-module.exports = 
+module.exports =
 	"checkFoo": ->
 		# simulated checks
 		_client = _createClient()
 
-		return ( cb )=>
-			_client.ping ( err, pong )=>
+		return ( cb )->
+			_client.ping ( err, pong )->
 				if err
 					cb( null, false, err )
 					return
@@ -41,8 +41,8 @@ module.exports =
 
 	"checkBar": ->
 		_client = _createClient( 3000 )
-		return ( cb )=>
-			_client.ping ( err, pong )=>
+		return ( cb )->
+			_client.ping ( err, pong )->
 				if err
 					cb( null, false, err )
 					return
@@ -52,13 +52,24 @@ module.exports =
 
 	"check42": ->
 		_client = _createClient()
-		return ( cb )=>
-			_client.query "SELECT 5", ( err, results )=>
+		return ( cb )->
+			_client.query "SELECT 5", ( err, results )->
 				if err
 					cb( null, false, err )
 					return
 				if not results?.length
 					cb( null, false )
+					return
+				cb( null, true )
+				return
+			return
+			
+	"checkError": ->
+		_client = _createClient( 1000, false )
+		return ( cb )->
+			_client.ping ( err, pong )->
+				if err
+					cb( null, false, err )
 					return
 				cb( null, true )
 				return

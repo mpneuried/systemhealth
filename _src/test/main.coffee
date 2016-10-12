@@ -1,34 +1,48 @@
 should = require('should')
 
-Systemhealth = require( "../." ) 
+Systemhealth = require( "../." )
 
-CHECKS = require( "./checks" ) 
+CHECKS = require( "./checks" )
 
 Health = null
 
 describe "----- Systemhealth TESTS -----", ->
 
-	before ( done )->
-		Health = new Systemhealth( { interval: 3, identifier: "test" }, [ "checkFoo", "check42" ], CHECKS )
-		done()
-		return
-
-	after ( done )->
-		done()
-		return
-
 	describe 'Main Tests', ->
 
 		# Implement tests cases here
 		it "general", ( done )->
+			Health = new Systemhealth( { interval: 3, identifier: "test" }, [ "checkFoo", "check42" ], CHECKS )
 			this.timeout( 10000 )
 
-			Health.on "checked", =>
+			Health.on "checked", ->
 				Health.getState().should.have.properties( "checkFoo", "check42" )
-				done()	
+				Health.stop()
+				done()
 				return
 
 			Health.start()
+			return
+		
+		# Implement tests cases here
+		it "error on start", ( done )->
+			
+			HealthErr = new Systemhealth( { interval: 3, identifier: "test" }, [ "checkFoo", "checkError" ], CHECKS )
+			this.timeout( 10000 )
+
+			HealthErr.on "checked", ->
+				state = HealthErr.getState()
+				state.should.have.properties( "checkFoo", "checkError" )
+				should.exist( state[ "checkError" ][0] )
+				state[ "checkError" ][0].should.lower(0)
+				return
+			
+			HealthErr.on "died", ->
+				HealthErr.stop()
+				done()
+				return
+
+			HealthErr.start()
 			return
 
 	return

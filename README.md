@@ -2,8 +2,12 @@ Systemhealth
 ============
 
 [![Build Status](https://secure.travis-ci.org/mpneuried/systemhealth.png?branch=master)](http://travis-ci.org/mpneuried/systemhealth)
-[![Build Status](https://david-dm.org/mpneuried/systemhealth.png)](https://david-dm.org/mpneuried/systemhealth)
-[![NPM version](https://badge.fury.io/js/systemhealth.png)](http://badge.fury.io/js/systemhealth)
+[![Windows Tests](https://img.shields.io/appveyor/ci/mpneuried/systemhealth.svg?label=WindowsTest)](https://ci.appveyor.com/project/mpneuried/systemhealth)
+[![Coveralls Coverage](https://img.shields.io/coveralls/mpneuried/systemhealth.svg)](https://coveralls.io/github/mpneuried/systemhealth)
+
+[![Deps Status](https://david-dm.org/mpneuried/systemhealth.png)](https://david-dm.org/mpneuried/systemhealth)
+[![npm version](https://badge.fury.io/js/systemhealth.png)](http://badge.fury.io/js/systemhealth)
+[![npm downloads](https://img.shields.io/npm/dt/systemhealth.svg?maxAge=2592000)](https://nodei.co/npm/systemhealth/)
 
 Node module to run simple custom checks for your machine or it's connections. It will use [redis-heartbeat](https://github.com/mpneuried/redis-heartbeat) to send the current state to redis.
 
@@ -166,6 +170,7 @@ The internally used instance of [`redis-heartbeat`](https://github.com/mpneuried
 
 |Version|Date|Description|
 |:--:|:--:|:--|
+|0.1.0|2016-10-12|Optimized tests; Updated dependencies; Optimized Dev env.|
 |0.0.3|2016-01-07|Updated dependencies; Optimized Readme|
 |0.0.2|2015-03-11|Small bugfix within redis connection listening|
 |0.0.1|2014-11-20|Initial commit|

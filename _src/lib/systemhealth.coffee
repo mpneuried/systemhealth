@@ -11,7 +11,7 @@ os = require( "os" )
 domain = require( "domain" )
 
 # **npm modules**
-_ = require( "lodash" )
+_isArray = require( "lodash/isArray" )
 async = require( "async" )
 # The [NPM:redis-heartbeat](https://cdn.rawgit.com/mpneuried/redis-heartbeat/master/_docs/README.md.html)
 Heartbeat = require( "redis-heartbeat" )
@@ -70,7 +70,7 @@ class SystemHealth extends require( "mpbasic" )()
 			return
 
 		# get the checks for this servertype and check the content
-		if not checks? or not _.isArray( checks )
+		if not checks? or not _isArray( checks )
 			@_handleError( true, "EEMPTYCHECKS" )
 			return
 
@@ -322,7 +322,7 @@ class SystemHealth extends require( "mpbasic" )()
 				# check every answer
 				for _name, _res of results
 					# dispatch result
-					if _.isArray( _res )
+					if _isArray( _res )
 						[ success, data ] = _res
 					else
 						success = _res
@@ -352,7 +352,7 @@ class SystemHealth extends require( "mpbasic" )()
 						_resurrect = true
 
 				# write a metric on every fail
-				if _fail
+				if _fail and @hb.config.intervalMetrics > 0 and @hb._sendMetrics?
 					@hb._sendMetrics()
 
 				@debug "state", @succeeded, @failed

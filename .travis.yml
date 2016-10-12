@@ -1,12 +1,6 @@
 os:
   - linux
-sudo: false
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - g++-4.8
+  - osx
 services:
   - redis-server
 language: node_js
@@ -15,16 +9,16 @@ node_js:
   - 0.12
   - 4.0
   - 4.1
-  - 4.2
+  - 4.5
   - 5.0
-  - 5.1
-  - 5.2
-  - 5.3
-  - 5.4
+  - 5.5
+  - 5.12
+  - 6
+  - 6.6
   - node
+  - lts/argon
+  - lts/*
   - iojs
-before_install:
-  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then export CXX=g++-4.8; fi
-before_script:
-  - "npm install -g mocha grunt-cli"
-  - "grunt build"
+after_success:
+  - ./node_modules/.bin/istanbul report text-summary lcov
+  - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
