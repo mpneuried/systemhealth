@@ -20,4 +20,9 @@ deploy.json
 /_docs
 /dockertests
 /coverage
+/test
+coffeelint.json
+*.yml
+.editorconfig
+.travis.yml
 Gruntfile.*
