@@ -24,7 +24,7 @@ class SystemHealth extends require( "mpbasic" )()
 
 	# ## defaults
 	defaults: =>
-		@extend true, super, 
+		@extend true, super,
 			# *identifier** *String|Function* The heartbeat identifier content as string or function. Passed directly to `redis-heartbeat`
 			identifier: null
 			# *name** *String* A server identifier name. Default is the host name. Passed directly to `redis-heartbeat`
@@ -78,7 +78,7 @@ class SystemHealth extends require( "mpbasic" )()
 		@_init( checks )
 
 		# create redis-heartbeat instance
-		@hb = new Heartbeat @extend( true, {}, ( @config.heartbeatOptions or {} ), 
+		@hb = new Heartbeat @extend( true, {}, ( @config.heartbeatOptions or {} ),
 			autostart: false
 			name: @config.name
 			identifier: @config.identifier
@@ -118,13 +118,13 @@ class SystemHealth extends require( "mpbasic" )()
 
 		# create the correct interval time
 		if @config.intervalVariance >= 0
-			@interval = ( @config.interval + utils.randRange( 0, @config.intervalVariance ) ) * 1000 
+			@interval = ( @config.interval + utils.randRange( 0, @config.intervalVariance ) ) * 1000
 		else
 			@interval = @config.interval
 
 		@info "health check interval: #{@interval/1000}s"
 		@checks = {}
-		for _name in checks 
+		for _name in checks
 			if @CHECKS[ _name ]?
 				@failed[ _name ] = 0
 				@succeeded[ _name ] = 0
@@ -274,7 +274,7 @@ class SystemHealth extends require( "mpbasic" )()
 	
 	@api private
 	###
-	_checkTimeout: ( name, fn )=>	
+	_checkTimeout: ( name, fn )=>
 		return ( cb )=>
 			_timeout = =>
 				cb( null, false, @_handleError( "ECHECKTIMEOUT", "ECHECKTIMEOUT", name: name ) )
@@ -334,6 +334,7 @@ class SystemHealth extends require( "mpbasic" )()
 						@succeeded[ _name ]++
 					else
 						_fail = true
+						@emit "failed", _name, data
 						@warning "failed-#{_name}", data 
 						@failed[ _name ]++
 						@succeeded[ _name ] = 0
@@ -383,7 +384,7 @@ class SystemHealth extends require( "mpbasic" )()
 	@api private
 	###
 	ERRORS: =>
-		@extend super, 
+		@extend super,
 			"EINVALIDCLINET": [ 500, "Please use a redis client instance for the `client` option." ]
 			"EEMPTYIDENT": [ 500, "No server identifier defined." ]
 			"EEMPTYCHECKS": [ 500, "For the type `#{@type}` no or an empty checklist has been found." ]

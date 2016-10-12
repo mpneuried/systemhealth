@@ -6,6 +6,10 @@ module.exports = (grunt) ->
 			module:
 				files: ["_src/**/*.coffee"]
 				tasks: [ "coffee:base" ]
+
+			module_test:
+				files: ["_src/**/*.coffee"]
+				tasks: [ "coffee:base", "test" ]
 			
 		coffee:
 			base:
@@ -45,7 +49,7 @@ module.exports = (grunt) ->
 				options:
 					env:
 						severity_systemhealth: "error"
-						
+
 	# Load npm modules
 	grunt.loadNpmTasks "grunt-contrib-watch"
 	grunt.loadNpmTasks "grunt-contrib-coffee"
@@ -53,21 +57,17 @@ module.exports = (grunt) ->
 	grunt.loadNpmTasks "grunt-mocha-cli"
 	grunt.loadNpmTasks "grunt-include-replace"
 
-	# just a hack until this issue has been fixed: https://github.com/yeoman/grunt-regarde/issues/3
-	grunt.option('force', not grunt.option('force'))
-	
 	# ALIAS TASKS
 	grunt.registerTask "default", "build"
-	grunt.registerTask "docs", "docker"
 	grunt.registerTask "clear", [ "clean:base" ]
 	grunt.registerTask "test", [ "mochacli:main" ]
-	
-	# Shortcuts
-	grunt.registerTask "w", "watch"
+	grunt.registerTask "watcher-test", [ "watch:module_test" ]
+
+	# ALIAS SHORTS
 	grunt.registerTask "b", "build"
+	grunt.registerTask "w", "watcher"
+	grunt.registerTask "wt", "watcher-test"
 	grunt.registerTask "t", "test"
-	
-	
+
 	# build the project
 	grunt.registerTask "build", [ "clear", "coffee:base", "includereplace" ]
-	grunt.registerTask "build-dev", [ "clear", "coffee:base", "docs", "test" ]

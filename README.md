@@ -11,6 +11,8 @@ Systemhealth
 
 Node module to run simple custom checks for your machine or it's connections. It will use [redis-heartbeat](https://github.com/mpneuried/redis-heartbeat) to send the current state to redis.
 
+[![NPM](https://nodei.co/npm/systemhealth.png?downloads=true&stars=true)](https://nodei.co/npm/systemhealth)
+
 ## Install
 
 ```sh
@@ -116,6 +118,15 @@ Emitted after a check
 
 - **state** : *( `Object` )* See method `.getState()` for teh description of the return
 
+#### `failed`
+
+A immediate event when a check fails.
+
+**Arguments** 
+
+- **check** : *( `String` )* The key of the failed check function
+- **data** : *( `Any` )* Optional data or error infos
+
 ## Example
 
 ```js
@@ -166,14 +177,60 @@ The internally used instance of [`redis-heartbeat`](https://github.com/mpneuried
 
 *( Heartbeat )*: The redis heartbeat instance
 
+## Testing
+
+The tests are based on the [mocha.js](https://mochajs.org/) framework with [should.js](https://shouldjs.github.io/) as assertaion lib.
+To start the test just call
+
+```
+	npm test
+```
+
+or
+
+```
+ grunt test
+```
+
+If you want to be more precice use the mocha cli
+
+```
+	mocha -R nyan -t 1337 test/main.js
+```
+
+### Docker-Tests
+
+If you want to test your module against multiple node versions you can use the docker tests.
+
+**Preparation**
+
+```sh
+	# make sure you installed all dependencies
+	npm install
+	# build the files
+	grunt build
+```
+
+**Run**
+
+To run the tests through the defined versions run the following command:
+
+```
+	dockertests/run.sh
+```
+
 ## Release History
 
 |Version|Date|Description|
 |:--:|:--:|:--|
 |0.1.0|2016-10-12|Optimized tests; Updated dependencies; Optimized Dev env.|
+|0.0.5|2016-06-24|Added `failed` event to get immediate infos on an failed check;|
+|0.0.4|2016-05-19|Updated dependencies; Updated dev env.; Removed generated code docs;|
 |0.0.3|2016-01-07|Updated dependencies; Optimized Readme|
 |0.0.2|2015-03-11|Small bugfix within redis connection listening|
 |0.0.1|2014-11-20|Initial commit|
+
+[![NPM](https://nodei.co/npm-dl/systemhealth.png?months=6)](https://nodei.co/npm/systemhealth/)
 
 ## Other projects
 

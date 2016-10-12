@@ -17,6 +17,7 @@ describe "----- Systemhealth TESTS -----", ->
 
 			Health.on "checked", ->
 				Health.getState().should.have.properties( "checkFoo", "check42" )
+
 				Health.stop()
 				done()
 				return
