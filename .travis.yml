@@ -9,7 +9,9 @@ addons:
     sources:
     - ubuntu-toolchain-r-test
     packages:
-    - g++-4.8
+      - g++-4.9
+env:
+  - CXX=g++-4.9
 language: node_js
 node_js:
   - 0.10
@@ -22,12 +24,11 @@ node_js:
   - 5.12
   - 6
   - 6.6
+  - 8.3
   - node
   - lts/argon
   - lts/*
   - iojs
-before_install:
-  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then export CXX=g++-4.8; fi
 after_success:
   - ./node_modules/.bin/istanbul report text-summary lcov
   - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
