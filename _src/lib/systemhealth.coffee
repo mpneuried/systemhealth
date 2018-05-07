@@ -24,7 +24,7 @@ class SystemHealth extends require( "mpbasic" )()
 
 	# ## defaults
 	defaults: =>
-		@extend true, super,
+		@extend true, super( arguments... ),
 			# *identifier** *String|Function* The heartbeat identifier content as string or function. Passed directly to `redis-heartbeat`
 			identifier: null
 			# *name** *String* A server identifier name. Default is the host name. Passed directly to `redis-heartbeat`
@@ -384,7 +384,7 @@ class SystemHealth extends require( "mpbasic" )()
 	@api private
 	###
 	ERRORS: =>
-		@extend super,
+		@extend super( arguments... ),
 			"EINVALIDCLINET": [ 500, "Please use a redis client instance for the `client` option." ]
 			"EEMPTYIDENT": [ 500, "No server identifier defined." ]
 			"EEMPTYCHECKS": [ 500, "For the type `#{@type}` no or an empty checklist has been found." ]

@@ -1,6 +1,6 @@
 {
   "name": "systemhealth",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Node module to run simple custom checks for your machine or it's connections. It will use redis-heartbeat to send the current state to redis.",
   "keywords": [
     "systemhealth",
@@ -28,24 +28,24 @@
   },
   "license": "MIT",
   "dependencies": {
-    "async": "2.5.x",
+    "async": "2.6.x",
     "lodash": "4.17.x",
     "mpbasic": "0.0.x",
-    "redis-heartbeat": "0.3.x"
+    "redis-heartbeat": "1.0.0"
   },
   "devDependencies": {
-    "coffee-coverage": "2.x",
+    "coffee-coverage": "3.x",
     "coffee-script": "1.12.x",
-    "coveralls": "2.13.x",
+    "coveralls": "3.0.x",
     "grunt": "1.0.x",
     "grunt-contrib-clean": "1.1.x",
-    "grunt-contrib-coffee": "1.x",
+    "grunt-contrib-coffee": "2.x",
     "grunt-contrib-watch": "1.x",
     "grunt-docker": "0.0.x",
     "grunt-include-replace": "5.x",
-    "grunt-mocha-cli": "3.x",
+    "grunt-mocha-cli": "4.x",
     "istanbul": "0.4.x",
-    "mocha": "3.5.x",
-    "should": "11.x"
+    "mocha": "5.1.x",
+    "should": "13.x"
   }
 }
