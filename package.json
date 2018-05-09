@@ -19,12 +19,15 @@
     "url": "https://github.com/systemhealth"
   },
   "main": "./index.js",
+  "engines": {
+    "node": ">= 6.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/mpneuried/systemhealth.git"
   },
   "scripts": {
-    "test": "COFFEECOV_INIT_ALL=false mocha --compilers coffee:coffee-script/register --require coffee-coverage/register-istanbul _src/test/**.coffee -R spec"
+    "test": "COFFEECOV_INIT_ALL=false mocha --compilers coffee:coffeescript/register --require coffee-coverage/register-istanbul _src/test/**.coffee -R spec"
   },
   "license": "MIT",
   "dependencies": {
@@ -35,7 +38,7 @@
   },
   "devDependencies": {
     "coffee-coverage": "3.x",
-    "coffee-script": "1.12.x",
+    "coffeescript": "2.x",
     "coveralls": "3.0.x",
     "grunt": "1.0.x",
     "grunt-contrib-clean": "1.1.x",

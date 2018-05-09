@@ -3,8 +3,6 @@
 # Test against these versions of Node.js.
 environment:
   matrix:
-    - nodejs_version: "4"
-    - nodejs_version: "5"
     - nodejs_version: "6"
     - nodejs_version: "8"
     - nodejs_version: "9"
@@ -29,7 +27,6 @@ install:
   - ps: Install-Product node $env:nodejs_version
   # Typical npm stuff. Use msvs 2013 for the hiredis parser
   - npm install
-  - npm install hiredis --msvs_version=2013
   - npm install -g grunt-cli mocha
   - grunt build
 
