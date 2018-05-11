@@ -27,7 +27,9 @@
     "url": "https://github.com/mpneuried/systemhealth.git"
   },
   "scripts": {
-    "test": "COFFEECOV_INIT_ALL=false mocha --compilers coffee:coffeescript/register --require coffee-coverage/register-istanbul _src/test/**.coffee -R spec"
+    "test": "COFFEECOV_INIT_ALL=false mocha --compilers coffee:coffeescript/register --require coffee-coverage/register-istanbul _src/test/**.coffee -R spec",
+    "test-builded": "grunt build test",
+    "build": "grunt build"
   },
   "license": "MIT",
   "dependencies": {

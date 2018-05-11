@@ -93,8 +93,6 @@ class SystemHealth extends require( "mpbasic" )()
 		@hb.on "disconnect", =>
 			@hb.once "connected", @resurrect
 			return
-
-		@hb.on "beforeMetric", @_onMetric
 		return
 
 	###
@@ -228,21 +226,6 @@ class SystemHealth extends require( "mpbasic" )()
 	###
 	getState: =>
 		@checkMetrics or null
-	
-	###
-	## _onMetric
-	
-	`systemhealth._onMetric( met )`
-	
-	redis-heartbeat hock to extend the metric data
-	
-	@param { Object } met Current machine/process metrics 
-	
-	@api private
-	###
-	_onMetric: ( met )=>
-		@debug "Metric", @extend( met, @checkMetrics )
-		return
 
 	###
 	## _recheck
@@ -279,10 +262,11 @@ class SystemHealth extends require( "mpbasic" )()
 			_timeout = =>
 				cb( null, false, @_handleError( "ECHECKTIMEOUT", "ECHECKTIMEOUT", name: name ) )
 				return
-			fn =>
+			fn( ( args... ) =>
 				clearTimeout( _tmt )
-				cb.apply( @, arguments )
+				cb.apply( @, args )
 				return
+			)
 			_tmt = setTimeout( _timeout, @config.failTimeout )
 			return
 
@@ -351,10 +335,6 @@ class SystemHealth extends require( "mpbasic" )()
 						_kill = true
 					else if @succeeded[ _name ] >= @config.successCount
 						_resurrect = true
-
-				# write a metric on every fail
-				if _fail and @hb.config.intervalMetrics > 0 and @hb._sendMetrics?
-					@hb._sendMetrics()
 
 				@debug "state", @succeeded, @failed
 

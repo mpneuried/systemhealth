@@ -5,14 +5,19 @@ Systemhealth = require( "../." )
 CHECKS = require( "./checks" )
 
 Health = null
+HealthErr = null
 
 describe "----- Systemhealth TESTS -----", ->
 
 	describe 'Main Tests', ->
-
+		
+		after ()->
+			Health.hb.quit()
+			HealthErr.hb.quit()
+			return
 		# Implement tests cases here
 		it "general", ( done )->
-			Health = new Systemhealth( { interval: 3, identifier: "test" }, [ "checkFoo", "check42" ], CHECKS )
+			Health = new Systemhealth( { interval: 3, identifier: "test", logging: { severity: "error" } }, [ "checkFoo", "check42" ], CHECKS )
 			this.timeout( 10000 )
 
 			Health.on "checked", ->
@@ -28,14 +33,14 @@ describe "----- Systemhealth TESTS -----", ->
 		# Implement tests cases here
 		it "error on start", ( done )->
 			
-			HealthErr = new Systemhealth( { interval: 3, identifier: "test" }, [ "checkFoo", "checkError" ], CHECKS )
+			HealthErr = new Systemhealth( { interval: 3, identifier: "test", logging: { severity: "error" } }, [ "checkFoo", "checkError" ], CHECKS )
 			this.timeout( 10000 )
 
 			HealthErr.on "checked", ->
 				state = HealthErr.getState()
 				state.should.have.properties( "checkFoo", "checkError" )
 				should.exist( state[ "checkError" ][0] )
-				state[ "checkError" ][0].should.lower(0)
+				state[ "checkError" ][0].should.below(0)
 				return
 			
 			HealthErr.on "died", ->
