@@ -223,7 +223,7 @@ To run the tests through the defined versions run the following command:
 
 |Version|Date|Description|
 |:--:|:--:|:--|
-|1.0.0|2018-05-07|Updated deps., Updated redis-heartbeat without metrics to run on node 10|
+|1.0.0|2018-05-07|Updated deps., Updated redis-heartbeat without metrics to run on node 10 and coffee 2|
 |0.1.1|2017-08-11|updated deps|
 |0.1.0|2016-10-12|Optimized tests; Updated dependencies; Optimized Dev env.|
 |0.0.5|2016-06-24|Added `failed` event to get immediate infos on an failed check;|
