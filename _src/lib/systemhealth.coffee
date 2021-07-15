@@ -13,8 +13,6 @@ domain = require( "domain" )
 # **npm modules**
 _isArray = require( "lodash/isArray" )
 async = require( "async" )
-# The [NPM:redis-heartbeat](https://cdn.rawgit.com/mpneuried/redis-heartbeat/master/_docs/README.md.html)
-Heartbeat = require( "redis-heartbeat" )
 
 # **internal modules**
 # The [Utils](./utils.coffee.html)
@@ -25,10 +23,6 @@ class SystemHealth extends require( "mpbasic" )()
 	# ## defaults
 	defaults: =>
 		@extend true, super( arguments... ),
-			# *identifier** *String|Function* The heartbeat identifier content as string or function. Passed directly to `redis-heartbeat`
-			identifier: null
-			# *name** *String* A server identifier name. Default is the host name. Passed directly to `redis-heartbeat`
-			name: os.hostname()
 
 			# **interval** *Number* Check interval in seconds
 			interval: 60
@@ -41,19 +35,6 @@ class SystemHealth extends require( "mpbasic" )()
 			# **failTimeout** *Number* Internal check timeout to wait for answers of check tasks
 			failTimeout: 2000
 
-			# **host** *String* Redis host name. Passed directly to `redis-heartbeat`
-			host: "localhost"
-			# **port** *Number* Redis port. Passed directly to `redis-heartbeat`
-			port: 6379
-			# **options** *Object* Redis options. Passed directly to `redis-heartbeat`
-			options: {}
-			# **client** *RedisClient* Existing redis client instance. Passed directly to `redis-heartbeat`
-			client: null
-			# **redisprefix** *String* A general redis key prefix. Passed directly to `redis-heartbeat`
-			redisprefix: ""
-			# **heartbeatOptions** *Object* Optional `redis-heartbeat` options. [Details](https://github.com/mpneuried/redis-heartbeat#initialize)
-			heartbeatOptions: null
-
 	###	
 	## constructor 
 
@@ -65,10 +46,6 @@ class SystemHealth extends require( "mpbasic" )()
 	constructor: ( options, checks, @CHECKS )->
 		super( options )
 
-		if not @config?.identifier?.length
-			@_handleError( true, "EEMPTYIDENT" )
-			return
-
 		# get the checks for this servertype and check the content
 		if not checks? or not _isArray( checks )
 			@_handleError( true, "EEMPTYCHECKS" )
@@ -77,22 +54,6 @@ class SystemHealth extends require( "mpbasic" )()
 		# init the checks
 		@_init( checks )
 
-		# create redis-heartbeat instance
-		@hb = new Heartbeat @extend( true, {}, ( @config.heartbeatOptions or {} ),
-			autostart: false
-			name: @config.name
-			identifier: @config.identifier
-			port: @config.port
-			host: @config.host
-			options: @config.options
-			client: @config.client
-			redisprefix: @config.redisprefix
-		)
-
-		# listen to redis-heartbeat events
-		@hb.on "disconnect", =>
-			@hb.once "connected", @resurrect
-			return
 		return
 
 	###
@@ -147,8 +108,6 @@ class SystemHealth extends require( "mpbasic" )()
 		@_check()
 		@once "checked", =>
 			@debug "start HB"
-			@hbActive = true
-			@hb.start()
 			@emit "started"
 			return
 		return @
@@ -185,8 +144,7 @@ class SystemHealth extends require( "mpbasic" )()
 	die: =>
 		return false if not @alive
 		@alive = false
-		@hb.stop()
-		@warning "die", @hb.isActive()
+		@warning "die"
 		@emit "died"
 		return true
 
@@ -205,8 +163,7 @@ class SystemHealth extends require( "mpbasic" )()
 	resurrect: =>
 		return false if @alive
 		@alive = true
-		@hb.start()
-		@warning "resurrect", @hb.isActive()
+		@warning "resurrect"
 		@emit "resurrected"
 		return true
 

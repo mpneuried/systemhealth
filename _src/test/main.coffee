@@ -11,10 +11,6 @@ describe "----- Systemhealth TESTS -----", ->
 
 	describe 'Main Tests', ->
 		
-		after ()->
-			Health.hb.quit()
-			HealthErr.hb.quit()
-			return
 		# Implement tests cases here
 		it "general", ( done )->
 			Health = new Systemhealth( { interval: 3, identifier: "test", logging: { severity: "error" } }, [ "checkFoo", "check42" ], CHECKS )
