@@ -1,6 +1,6 @@
 {
 	"name": "systemhealth",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"description": "Node module to run simple custom checks for your machine or it's connections. It will use redis-heartbeat to send the current state to redis.",
 	"keywords": [
 		"systemhealth",
