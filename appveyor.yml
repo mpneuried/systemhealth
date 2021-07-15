@@ -3,10 +3,9 @@
 # Test against these versions of Node.js.
 environment:
   matrix:
-    - nodejs_version: "6"
-    - nodejs_version: "8"
-    - nodejs_version: "9"
     - nodejs_version: "10"
+    - nodejs_version: "12"
+    - nodejs_version: "14"
     - nodejs_version: "LTS"
     - nodejs_version: "Stable"
 
@@ -18,14 +17,8 @@ shallow_clone: true
 
 # Install scripts. (runs after repo cloning)
 install:
-  # Install the Redis
-  - nuget install redis-64 -excludeversion
-  - redis-64\tools\redis-server.exe --service-install
-  - redis-64\tools\redis-server.exe --service-start
-  - '@ECHO Redis Started'
   # Get the latest stable version of Node 0.STABLE.latest
   - ps: Install-Product node $env:nodejs_version
-  # Typical npm stuff. Use msvs 2013 for the hiredis parser
   - npm install
   - npm install -g grunt-cli mocha
   - grunt build
