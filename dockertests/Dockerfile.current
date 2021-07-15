@@ -1,16 +1,12 @@
-FROM node:8
+FROM node:current-alpine
 MAINTAINER M. Peter <mp@tcs.de>
-
-RUN apt-get update -qq && apt-get upgrade -y && apt-get install -y build-essential
-
-RUN apt-get -y install redis-server
 
 RUN	mkdir -p /usr/src/
 WORKDIR /usr/src/
 
-COPY package.json /usr/src/package.json
-
 RUN npm install -g mocha
+
+COPY package.json /usr/src/package.json
 RUN npm install
 
 COPY lib/ /usr/src/lib/
