@@ -1,5 +1,5 @@
 (function() {
-  exports.version = '1.0.0';
+  exports.version = '2.0.0';
 
   module.exports = require('./lib/systemhealth');
 
